@@ -37,23 +37,6 @@ def isGameOver(board):
 
     return False
 
-def isValid(board):
-    # Count number of 'X' and 'O' in the given board
-    firstPlayerCount = board.count(Cell.FIRST_PLAYER)
-    secondPlayerCount = board.count(Cell.SECOND_PLAYER)
-
-    # Board can be valid only if either xCount and oCount
-    # is same or xount is one more than oCount
-    if (firstPlayerCount == secondPlayerCount or firstPlayerCount == secondPlayerCount + 1):
-        # Check if gameOver then permutation is not needed
-        if (isGameOver(board)):
-            return False
-
-        # If counts are correct and game isn't over
-        return True
-
-    return False
-
 while not winner :
     printBoard()
 

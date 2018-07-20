@@ -23,6 +23,20 @@ def printBoard() :
     print( '|' + choices[6].value + '|' + choices[7].value + '|' + choices[8].value + '|')
     print( ' -----\n')
 
+def isGameOver(board):
+    for x in range (0, 3) :
+        y = x * 3
+        if (board[y] != Cell.EMPTY and board[y] == board[(y + 1)] and board[y] == board[(y + 2)]) :
+            return True
+        if (board[x] != Cell.EMPTY and board[x] == board[(x + 3)] and board[x] == board[(x + 6)]) :
+            return True
+
+    if((board[0] != Cell.EMPTY and board[0] == board[4] and board[0] == board[8]) or
+       (board[2] != Cell.EMPTY and board[2] == board[4] and board[4] == board[6])) :
+        return True
+
+    return False
+
 while not winner :
     printBoard()
 
@@ -47,17 +61,7 @@ while not winner :
 
     playerTurn = not playerTurn
 
-    for x in range (0, 3) :
-        y = x * 3
-        if (choices[y] != Cell.EMPTY and choices[y] == choices[(y + 1)] and choices[y] == choices[(y + 2)]) :
-            winner = True
-            printBoard()
-        if (choices[x] != Cell.EMPTY and choices[x] == choices[(x + 3)] and choices[x] == choices[(x + 6)]) :
-            winner = True
-            printBoard()
-
-    if((choices[0] != Cell.EMPTY and choices[0] == choices[4] and choices[0] == choices[8]) or
-       (choices[2] != Cell.EMPTY and choices[2] == choices[4] and choices[4] == choices[6])) :
+    if (isGameOver(choices)):
         winner = True
         printBoard()
 

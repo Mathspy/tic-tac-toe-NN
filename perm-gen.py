@@ -40,5 +40,8 @@ def isValid(board):
 
     return False
 
-valid_possibilities = [board for board in all_possibilities if isValid(board)]
+def byteifyPossibility(board):
+    return [(1 if cell == Cell.FIRST_PLAYER else 0) for cell in board] + [(1 if cell == Cell.SECOND_PLAYER else 0) for cell in board]
+
+valid_possibilities = [byteifyPossibility(board) for board in all_possibilities if isValid(board)]
 print(len(valid_possibilities))

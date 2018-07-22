@@ -1,5 +1,17 @@
-function networkPlay(board) {
+import { loadModel, tensor } from "@tensorflow/tfjs"
 
+let model
+
+async function startLoadingModel() {
+  model = await loadModel("./model/model.json")
+}
+
+function networkPlay(board) {
+  return model.predict(byteifyBoard(board)).argMax(1).data();
+}
+
+function byteifyBoard(board) {
+  return tensor([].concat(board.map(cell => cell === "X" ? 1 : 0), board.map(cell => cell === "O" ? 1 : 0)), [1, 18])
 }
 
 function reverseTurn(currentTurn) { //This function is just here to reverses turns in an elegant format instead of me having to add all this to every line where I want it to be used
@@ -38,4 +50,4 @@ function noMoreMovesLeft(board) {
 
 //Exporting the AI for use in Store, same as gameOver and noMoreMovesLeft for checking in case player is the one to end it.
 //Exporting reverseTurn for the reset function in Reactify.js
-export { networkPlay, isGameOver, noMoreMovesLeft, reverseTurn };
+export { networkPlay, isGameOver, noMoreMovesLeft, reverseTurn, startLoadingModel };

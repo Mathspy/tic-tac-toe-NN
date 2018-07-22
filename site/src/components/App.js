@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import './App.css';
 
-import { networkPlay, isGameOver, reverseTurn, noMoreMovesLeft } from "../core/logic"
+import { networkPlay, isGameOver, reverseTurn, noMoreMovesLeft, startLoadingModel } from "../core/logic"
 
 import ScoreBoard from "./ScoreBoard";
 import Playground from "./Playground";
@@ -20,31 +20,40 @@ class App extends Component {
     }
   }
 
-  componentDidUpdate() {
-    if (this.state.turn === this.state.me) {
+  componentDidMount() {
+    startLoadingModel()
+  }
 
+  componentDidUpdate() {
+    // console.log(this.state.scores.network)
+    if (this.state.turn === this.state.me && !this.state.loading && this.state.gameState === "gameStart") {
+      // console.log("I AM ABOUT TO BEAT YO ASS")
+      this.setState(() => ({loading: true}))
+      networkPlay(this.state.board).then(([move]) => {
+        this.move(move, true)()
+      })
     }
   }
 
-  move = (index) => () => {
-    if (!this.state.loading && this.gameState !== "gameOver" && this.state.board[index] === "?") {
+  move = (index, loadingOverride) => () => {
+    if ((!this.state.loading || loadingOverride)  && this.gameState !== "gameOver" && this.state.board[index] === "?") {
       const board = this.state.board.slice(0);
-      const { turn, gameState } = this.state;
+      const { turn, gameState, me } = this.state;
       board[index] = turn
-      console.log(board)
+      // console.log(board)
 
       let winner = isGameOver(board)
       if (!winner) {
         if (!noMoreMovesLeft(board)) {
-          this.setState(() => ({ board, turn: reverseTurn(turn)}))
+          this.setState(() => ({ board, turn: reverseTurn(turn), loading: false}))
         } else {
-          this.setState(() => ({ board, gameState: "draw"}))
+          this.setState(() => ({ board, gameState: "draw", loading: false}))
         }
       } else {
-        if (winner === this.me) {
-          this.setState(prevState => ({ board, gameState: "gameOver", scores: {network: prevState.scores.network++, player: prevState.scores.player}}))
+        if (winner === me) {
+          this.setState(prevState => ({ board, gameState: "gameOver", scores: {network: prevState.scores.network + 1, player: prevState.scores.player}, loading: false}))
         } else {
-          this.setState(prevState => ({ board, gameState: "gameOver", scores: {network: prevState.scores.network, player: prevState.scores.player++}}))
+          this.setState(prevState => ({ board, gameState: "gameOver", scores: {network: prevState.scores.network, player: prevState.scores.player + 1}, loading: false}))
         }
       }
     }

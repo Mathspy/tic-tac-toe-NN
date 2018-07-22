@@ -9,6 +9,7 @@ export default class ScoreBoard extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    console.log(nextProps.scores, this.props.scores)
     if (this.props.scores.player !== nextProps.scores.player) {
       this.startAnimation(600, 1)
     } else if (this.props.scores.network !== nextProps.scores.network) {
@@ -21,7 +22,7 @@ export default class ScoreBoard extends React.Component {
       setTimeout(() => this.setState({network: ""}), duration);
     } else {
       this.setState({player: styles.fadeAround})
-            setTimeout(() => this.setState({player: ""}), duration);
+      setTimeout(() => this.setState({player: ""}), duration);
     }
   }
 

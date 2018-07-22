@@ -12,7 +12,7 @@ with open("./data/train_labels.pickle", "rb") as handle:
 
 model = keras.Sequential([
     keras.layers.Flatten(input_shape=(18,)),
-    keras.layers.Dense(9, activation=tf.nn.relu),
+    keras.layers.Dense(48, activation=tf.nn.relu),
     keras.layers.Dense(9, activation=tf.nn.softmax)
 ])
 
@@ -20,4 +20,6 @@ model.compile(optimizer=tf.train.AdamOptimizer(),
               loss='sparse_categorical_crossentropy',
               metrics=['accuracy'])
 
-model.fit(train_inputs, train_labels, epochs=100)
+model.fit(train_inputs, train_labels, epochs=3000)
+
+model.save("./model/UltTic.h5")

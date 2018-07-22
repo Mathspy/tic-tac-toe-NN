@@ -11,6 +11,7 @@ class App extends Component {
     this.state = {
       scores: {network: 0, player: 0},
       loading: false,
+      board: ["?", "?", "?", "?", "?", "?", "?", "?", "?"]
     }
   }
 
@@ -18,7 +19,7 @@ class App extends Component {
     return (
       <div className="container">
         <ScoreBoard loading={this.state.loading} scores={this.state.scores} />
-        <Playground />
+        <Playground board={this.state.board} />
       </div>
     );
   }

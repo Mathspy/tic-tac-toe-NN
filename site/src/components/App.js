@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import './App.css';
 
 import ScoreBoard from "./ScoreBoard";
+import Playground from "./Playground";
 
 class App extends Component {
   constructor(props) {
@@ -17,6 +18,7 @@ class App extends Component {
     return (
       <div className="container">
         <ScoreBoard loading={this.state.loading} scores={this.state.scores} />
+        <Playground />
       </div>
     );
   }

@@ -11,8 +11,7 @@ with open("./data/train_labels.pickle", "rb") as handle:
     train_labels = pickle.load(handle)
 
 model = keras.Sequential([
-    keras.layers.Flatten(input_shape=(18,)),
-    keras.layers.Dense(48, activation=tf.nn.relu),
+    keras.layers.Dense(48, activation=tf.nn.relu, input_shape=(18, )),
     keras.layers.Dense(9, activation=tf.nn.softmax)
 ])
 

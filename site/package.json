@@ -23,5 +23,6 @@
     "Tensorflow",
     "TicTacToe"
   ],
-  "author": "Mathspy"
+  "author": "Mathspy",
+  "license": "MIT"
 }

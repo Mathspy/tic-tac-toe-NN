@@ -9,6 +9,7 @@ tensorflow = "*"
 pytest = "*"
 "h5py" = "*"
 pyyaml = "*"
+tensorflowjs = "*"
 
 [dev-packages]
 

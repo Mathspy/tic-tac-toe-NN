@@ -191,3 +191,110 @@ class TestNoMoreMovesLeft():
                     Cell.SECOND_PLAYER, Cell.EMPTY, Cell.FIRST_PLAYER,
                     Cell.FIRST_PLAYER, Cell.SECOND_PLAYER, Cell.FIRST_PLAYER]
                 ) == False
+
+class TestMinMax():
+    def test_already_lost(self):
+        assert minimax(
+                    [Cell.FIRST_PLAYER, Cell.EMPTY, Cell.FIRST_PLAYER,
+                    Cell.FIRST_PLAYER, Cell.EMPTY, Cell.SECOND_PLAYER,
+                    Cell.FIRST_PLAYER, Cell.SECOND_PLAYER, Cell.EMPTY],
+                    0, Cell.SECOND_PLAYER, Cell.FIRST_PLAYER
+                ) == -10
+
+        assert minimax(
+                    [Cell.FIRST_PLAYER, Cell.EMPTY, Cell.FIRST_PLAYER,
+                    Cell.FIRST_PLAYER, Cell.EMPTY, Cell.SECOND_PLAYER,
+                    Cell.FIRST_PLAYER, Cell.SECOND_PLAYER, Cell.EMPTY],
+                    3, Cell.SECOND_PLAYER, Cell.FIRST_PLAYER
+                ) == -7
+
+    def test_already_won(self):
+        assert minimax(
+                    [Cell.FIRST_PLAYER, Cell.EMPTY, Cell.FIRST_PLAYER,
+                    Cell.FIRST_PLAYER, Cell.EMPTY, Cell.SECOND_PLAYER,
+                    Cell.FIRST_PLAYER, Cell.SECOND_PLAYER, Cell.EMPTY],
+                    0, Cell.FIRST_PLAYER, Cell.FIRST_PLAYER
+                ) == 10
+
+        assert minimax(
+                    [Cell.FIRST_PLAYER, Cell.EMPTY, Cell.FIRST_PLAYER,
+                    Cell.FIRST_PLAYER, Cell.EMPTY, Cell.SECOND_PLAYER,
+                    Cell.FIRST_PLAYER, Cell.SECOND_PLAYER, Cell.EMPTY],
+                    3, Cell.FIRST_PLAYER, Cell.FIRST_PLAYER
+                ) == 7
+
+    def test_already_won(self):
+        assert minimax(
+                    [Cell.FIRST_PLAYER, Cell.SECOND_PLAYER, Cell.FIRST_PLAYER,
+                    Cell.FIRST_PLAYER, Cell.FIRST_PLAYER, Cell.SECOND_PLAYER,
+                    Cell.SECOND_PLAYER, Cell.FIRST_PLAYER, Cell.SECOND_PLAYER],
+                    0, Cell.FIRST_PLAYER, Cell.FIRST_PLAYER
+                ) == 0
+
+        assert minimax(
+                    [Cell.FIRST_PLAYER, Cell.FIRST_PLAYER, Cell.SECOND_PLAYER,
+                    Cell.SECOND_PLAYER, Cell.SECOND_PLAYER, Cell.FIRST_PLAYER,
+                    Cell.FIRST_PLAYER, Cell.SECOND_PLAYER, Cell.FIRST_PLAYER],
+                    3, Cell.SECOND_PLAYER, Cell.FIRST_PLAYER
+                ) == 0
+
+class TestFindBestMove():
+    def test_always_top_corner_on_empty_board(self):
+        assert findBestMove(
+                    [Cell.EMPTY, Cell.EMPTY, Cell.EMPTY,
+                    Cell.EMPTY, Cell.EMPTY, Cell.EMPTY,
+                    Cell.EMPTY, Cell.EMPTY, Cell.EMPTY],
+                ) == 0
+
+    def test_avoid_lose(self):
+        assert findBestMove(
+                    [Cell.FIRST_PLAYER, Cell.EMPTY, Cell.EMPTY,
+                    Cell.FIRST_PLAYER, Cell.SECOND_PLAYER, Cell.SECOND_PLAYER,
+                    Cell.EMPTY, Cell.FIRST_PLAYER, Cell.EMPTY],
+                ) == 6
+
+        assert findBestMove(
+                    [Cell.SECOND_PLAYER, Cell.EMPTY, Cell.SECOND_PLAYER,
+                    Cell.EMPTY, Cell.EMPTY, Cell.FIRST_PLAYER,
+                    Cell.FIRST_PLAYER, Cell.EMPTY, Cell.EMPTY],
+                ) == 1
+
+    def test_go_for_win(self):
+        assert findBestMove(
+                    [Cell.FIRST_PLAYER, Cell.SECOND_PLAYER, Cell.EMPTY,
+                    Cell.FIRST_PLAYER, Cell.SECOND_PLAYER, Cell.SECOND_PLAYER,
+                    Cell.EMPTY, Cell.FIRST_PLAYER, Cell.EMPTY],
+                ) == 6
+
+        assert findBestMove(
+                    [Cell.SECOND_PLAYER, Cell.EMPTY, Cell.SECOND_PLAYER,
+                    Cell.EMPTY, Cell.FIRST_PLAYER, Cell.FIRST_PLAYER,
+                    Cell.FIRST_PLAYER, Cell.EMPTY, Cell.EMPTY],
+                ) == 1
+
+class TestBytifier():
+    def test_empty_board_is_empty_inputs(self):
+        assert byteifyPossibility(
+                    [Cell.EMPTY, Cell.EMPTY, Cell.EMPTY,
+                    Cell.EMPTY, Cell.EMPTY, Cell.EMPTY,
+                    Cell.EMPTY, Cell.EMPTY, Cell.EMPTY],
+                ) == [0] * 18
+
+    def test_boards(self):
+        assert byteifyPossibility(
+                    [Cell.EMPTY, Cell.FIRST_PLAYER, Cell.EMPTY,
+                    Cell.FIRST_PLAYER, Cell.EMPTY, Cell.SECOND_PLAYER,
+                    Cell.EMPTY, Cell.EMPTY, Cell.SECOND_PLAYER],
+                ) == [0, 1, 0, 1, 0, 0, 0, 0, 0] + [0, 0, 0, 0, 0, 1, 0, 0, 1]
+
+        assert byteifyPossibility(
+                    [Cell.EMPTY, Cell.SECOND_PLAYER, Cell.EMPTY,
+                    Cell.FIRST_PLAYER, Cell.FIRST_PLAYER, Cell.SECOND_PLAYER,
+                    Cell.EMPTY, Cell.FIRST_PLAYER, Cell.SECOND_PLAYER],
+                ) == [0, 0, 0, 1, 1, 0, 0, 1, 0] + [0, 1, 0, 0, 0, 1, 0, 0, 1]
+
+        assert byteifyPossibility(
+                    [Cell.FIRST_PLAYER, Cell.SECOND_PLAYER, Cell.FIRST_PLAYER,
+                    Cell.FIRST_PLAYER, Cell.FIRST_PLAYER, Cell.SECOND_PLAYER,
+                    Cell.SECOND_PLAYER, Cell.FIRST_PLAYER, Cell.SECOND_PLAYER],
+                ) == [1, 0, 1, 1, 1, 0, 0, 1, 0] + [0, 1, 0, 0, 0, 1, 1, 0, 1]

@@ -1,6 +1,7 @@
 import math
 import numpy as np
 import pickle
+import os
 
 from itertools import product
 from enum import Enum
@@ -72,7 +73,7 @@ def minimax(board, depth, me, turn):
 
     turn = Cell.FIRST_PLAYER if turn == Cell.SECOND_PLAYER else Cell.SECOND_PLAYER
 
-    bestValue = -math.inf
+    bestValue = -math.inf if me == turn else math.inf
     for idx, cell in enumerate(board):
         if (cell == Cell.EMPTY):
             newBoard = board.copy()
@@ -87,6 +88,7 @@ def byteifyPossibility(board):
     return [(1 if cell == Cell.FIRST_PLAYER else 0) for cell in board] + [(1 if cell == Cell.SECOND_PLAYER else 0) for cell in board]
 
 if __name__ == '__main__':
+    dirname = os.path.abspath(os.path.dirname(__file__))
     all_possibilities = [list(board) for board in product([Cell.EMPTY, Cell.FIRST_PLAYER, Cell.SECOND_PLAYER], repeat=9)]
     print(len(all_possibilities))
     valid_possibilities = [board for board in all_possibilities if isValid(board)]
@@ -94,5 +96,5 @@ if __name__ == '__main__':
     train_y = np.array([findBestMove(board) for board in valid_possibilities])
     print(train_x.shape)
     print(train_y.shape)
-    pickle.dump(train_x, open("./data/train_inputs.pickle", "wb"))
-    pickle.dump(train_y, open("./data/train_labels.pickle", "wb"))
+    pickle.dump(train_x, open(dirname + "/train_inputs.pickle", "wb"))
+    pickle.dump(train_y, open(dirname + "/train_labels.pickle", "wb"))

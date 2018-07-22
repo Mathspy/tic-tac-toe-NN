@@ -4,14 +4,17 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-numpy = "*"
-tensorflow = "*"
-pytest = "*"
-"h5py" = "*"
-pyyaml = "*"
-tensorflowjs = "*"
+numpy = "==1.14.1"
+tensorflow = "==1.9.0"
+"h5py" = "==2.7.1"
+pyyaml = "==3.13"
+tensorflowjs = "==0.5.2"
 
 [dev-packages]
+pytest = "==3.6.3"
 
 [requires]
 python_version = "3.6"
+
+[scripts]
+test = "pytest"

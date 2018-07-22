@@ -64,11 +64,6 @@ export default class Tile extends React.Component {
     }
   }
 
-  move = () => { //It's managed like this so we can take this.props from it as well as making sure that we aren't putting any () inside of our beloved render!
-    console.log(Store.loading);
-    this.props.move()
-  }
-
   render() {
     return (
       // <TouchableHighlight onPress={this.move} underlayColor="#FE9C7F">
@@ -76,7 +71,7 @@ export default class Tile extends React.Component {
       //     {this.determineIcon}
       //   </View>
       // </TouchableHighlight>
-      <div className={styles.square} style={{backgroundColor: this.props.color}}>
+      <div className={styles.square} onClick={this.props.move} style={{backgroundColor: this.props.color}}>
         {this.renderIcon()}
       </div>
     )

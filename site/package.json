@@ -1,0 +1,27 @@
+{
+  "name": "site",
+  "version": "0.1.0",
+  "description": "TicTacToe React project to showcase Keras trained model's performance",
+  "dependencies": {
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1",
+    "react-scripts": "1.1.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Mathspy/tic-tac-toe-NN/tree/master/site"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "keywords": [
+    "Neural Network",
+    "Keras",
+    "Tensorflow",
+    "TicTacToe"
+  ],
+  "author": "Mathspy"
+}

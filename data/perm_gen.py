@@ -10,8 +10,6 @@ class Cell(Enum):
     FIRST_PLAYER = 'X'
     SECOND_PLAYER = 'O'
 
-all_possibilities = [list(board) for board in product([Cell.EMPTY, Cell.FIRST_PLAYER, Cell.SECOND_PLAYER], repeat=9)]
-print(len(all_possibilities))
 
 def isGameOver(board):
     for x in range (0, 3):
@@ -88,10 +86,13 @@ def minimax(board, depth, me, turn):
 def byteifyPossibility(board):
     return [(1 if cell == Cell.FIRST_PLAYER else 0) for cell in board] + [(1 if cell == Cell.SECOND_PLAYER else 0) for cell in board]
 
-valid_possibilities = [board for board in all_possibilities if isValid(board)]
-train_x = np.array([byteifyPossibility(board) for board in valid_possibilities])
-train_y = np.array([findBestMove(board) for board in valid_possibilities])
-print(train_x.shape)
-print(train_y.shape)
-pickle.dump(train_x, open("./data/train_inputs.pickle", "wb"))
-pickle.dump(train_y, open("./data/train_labels.pickle", "wb"))
+if __name__ == '__main__':
+    all_possibilities = [list(board) for board in product([Cell.EMPTY, Cell.FIRST_PLAYER, Cell.SECOND_PLAYER], repeat=9)]
+    print(len(all_possibilities))
+    valid_possibilities = [board for board in all_possibilities if isValid(board)]
+    train_x = np.array([byteifyPossibility(board) for board in valid_possibilities])
+    train_y = np.array([findBestMove(board) for board in valid_possibilities])
+    print(train_x.shape)
+    print(train_y.shape)
+    pickle.dump(train_x, open("./data/train_inputs.pickle", "wb"))
+    pickle.dump(train_y, open("./data/train_labels.pickle", "wb"))

@@ -1,95 +1,96 @@
 import React from "react"
 
+import { css, keyframes } from "emotion"
+
 export default class ScoreBoard extends React.Component {
-//   constructor(props) {
-//     super(props);
-//
-//     // this.changeScore = new Animated.Value(1)
-//
-//     // const fadeAround = reaction(
-//     //   () => Store.score.me,
-//     //   useless => {
-//     //     Animated.timing(
-//     //     this.changeScore, {
-//     //       toValue: 0,
-//     //       duration: 300,
-//     //       easing: Easing.elastic(0)
-//     //     }).start(() => {
-//     //       Animated.timing(
-//     //       this.changeScore, {
-//     //         toValue: 1,
-//     //         duration: 300,
-//     //         easing: Easing.elastic(0)
-//     //       }).start()
-//     //     })
-//     //   }
-//     // )
-//   }
+  constructor(props) {
+    super(props);
+    this.state = {network: "", player: ""}
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.scores.player !== nextProps.scores.player) {
+      this.startAnimation(600, 1)
+    } else if (this.props.scores.network !== nextProps.scores.network) {
+      this.startAnimation(600, 0)
+    }
+  }
+  startAnimation(duration, victor) {
+    if (victor === 0) {
+      this.setState({network: styles.fadeAround})
+      setTimeout(() => this.setState({network: ""}), duration);
+    } else {
+      this.setState({player: styles.fadeAround})
+            setTimeout(() => this.setState({player: ""}), duration);
+    }
+  }
 
   renderLoading() {
     return (
-      <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="340.274px" height="340.274px" viewBox="0 0 340.274 340.274" style="enable-background:new 0 0 340.274 340.274;">
-      {/* <Svg style={{ height: "70%",  width: "70%" }} viewBox="0 0 340.274 340.274"> */}
-        <path fill="#C86B98" d="M293.629,127.806l-5.795-13.739c19.846-44.856,18.53-46.189,14.676-50.08l-25.353-24.77l-2.516-2.12h-2.937
-            c-1.549,0-6.173,0-44.712,17.48l-14.184-5.719c-18.332-45.444-20.212-45.444-25.58-45.444h-35.765
-            c-5.362,0-7.446-0.006-24.448,45.606l-14.123,5.734C86.848,43.757,71.574,38.19,67.452,38.19l-3.381,0.105L36.801,65.032
-            c-4.138,3.891-5.582,5.263,15.402,49.425l-5.774,13.691C0,146.097,0,147.838,0,153.33v35.068c0,5.501,0,7.44,46.585,24.127
-            l5.773,13.667c-19.843,44.832-18.51,46.178-14.655,50.032l25.353,24.8l2.522,2.168h2.951c1.525,0,6.092,0,44.685-17.516
-            l14.159,5.758c18.335,45.438,20.218,45.427,25.598,45.427h35.771c5.47,0,7.41,0,24.463-45.589l14.195-5.74
-            c26.014,11,41.253,16.585,45.349,16.585l3.404-0.096l27.479-26.901c3.909-3.945,5.278-5.309-15.589-49.288l5.734-13.702
-            c46.496-17.967,46.496-19.853,46.496-25.221v-35.029C340.268,146.361,340.268,144.434,293.629,127.806z M170.128,228.474
-            c-32.798,0-59.504-26.187-59.504-58.364c0-32.153,26.707-58.315,59.504-58.315c32.78,0,59.43,26.168,59.43,58.315
-            C229.552,202.287,202.902,228.474,170.128,228.474z"/>
+      <svg xmlns="http://www.w3.org/2000/svg" className={styles.loading} width="100px" height="100px" viewBox="0 0 340.274 340.274">
+        <path fill="#C86B98" d="M294 128l-6-14c20-45 18-46 15-50l-26-25-2-2h-3c-2 0-6 0-45 18l-14-6C194 3 193 3 187 3h-36c-5 0-7 0-24 46l-14 6C87 44 72 38 67 38h-3L37 65c-4 4-6 5 15 49l-6 14C0 146 0 148 0 153v35c0 6 0 8 47 25l5 13c-19 45-18 46-14 50l25 25 3 2h3c1 0 6 0 44-17l14 5c19 46 21 46 26 46h36c5 0 7 0 24-46l14-5c26 11 42 16 46 16h3l28-27c4-4 5-5-16-49l6-14c46-18 46-20 46-25v-35c0-6 0-8-46-24zM170 228c-33 0-59-26-59-58s26-58 59-58 60 26 60 58-27 58-60 58z"
+        />
       </svg>
     )
   }
 
   render() {
     return (
-      <div style={styles.numerical}>
-        <div style={[styles.single, styles.first]}>
-          {/* <AnimatedText style={[styles.texty, {opacity: this.changeScore}]}>{Store.score.me}</AnimatedText> */}
-          <p style={styles.texty}>5</p>
+      <div className={styles.numerical}>
+        <div className={`${styles.single} ${styles.first}`}>
+          <p className={`${styles.texty} ${this.state.network}`}>{this.props.scores.network}</p>
         </div>
-        <div style={[styles.single, styles.second]}>
-          {this.loading}
+        <div className={`${styles.single} ${styles.second}`}>
+          {this.props.loading ? this.renderLoading() : null}
         </div>
-        <div style={[styles.single, styles.third]}>
-          {/* <p style={styles.texty}>{Store.score.player}</p> */}
-          <p style={styles.texty}>0</p>
+        <div className={`${styles.single} ${styles.third}`}>
+          <p className={`${styles.texty} ${this.state.player}`}>{this.props.scores.player}</p>
         </div>
       </div>
     )
   }
 }
 
+const rotate = keyframes`
+  from {transform: rotate(0deg);}
+  to {transform: rotate(360deg);}
+`
 
+const fadeAround = keyframes`
+  0% {opacity: 1;}
+  50% {opacity: 0;}
+  100% {opacity: 1;}
+`
 
 const styles = {
-  numerical: {
-    flex: 0.7,
+  numerical: css({
+    display: "flex",
     flexDirection: "row",
     justifyContent: "space-between"
-  },
-  single: {
-    width: "33.33%",
+  }),
+  single: css({
     flexDirection: "row",
     padding: 20,
     paddingTop: 10,
-    //justifyContent: "center"
-  },
-  first: {
+    display: "inline-block"
+  }),
+  first: css({
     justifyContent: "flex-start",
-  },
-  second: {
+  }),
+  second: css({
     justifyContent: "center",
-    // backgroundColor: "orange"
-  },
-  third: {
+  }),
+  third: css({
     justifyContent: "flex-end"
-  },
-  texty: {
-    fontSize: 40,
-    color: "#FF9F70"
-  }
+  }),
+  texty: css({
+    fontSize: 50,
+    color: "#FF9F70",
+  }),
+  loading: css({
+    animation: `${rotate} 2s infinite linear`
+  }),
+  fadeAround: css({
+    animation: `${fadeAround} 600ms linear`
+  })
 };

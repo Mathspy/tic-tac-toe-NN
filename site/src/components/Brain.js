@@ -45,33 +45,33 @@ const styles = {
 
 const insults = {
   gameStart: [
-    "Welcome! Are you ready for some beating? ❤",
-    "Oh! There you're, ready to lose?",
+    "Welcome! Are you ready to be beaten? ❤",
+    "Oh! There you're, ready to lose? (or draw endlessly...)",
     "Look who it is! The LOSER",
-    "I see you missed the pain ❤",
     "One more lose for this good fella, incoming!",
-    "There are many ways that I can make you cry",
-    "You just clicked on the wrong neighbourhood!"
+    "There are many ways that I can make you cry. And many ways this can end in a tie...",
+    "You just clicked on the wrong neighbourhood, friend!",
+    "Statistically speaking the chance all the millennium prize problems get solved in same second is higher than anyone defeating me.",
+    "In theory Mathy never had to code your score counter, because there is no fair way to make it increase",
   ],
   gameProgress: [
   ],
   draw: [
-    "Ha! Not bad for a scrub, I guess",
-    "Yea, if you can't beat them, draw them?? Nerd.",
-    "I will make you regret that 1 you wasted from my score",
-    "Good way to avoid some tears, but not for long!",
-    "The hero couldn't attack his enemy so he simply avoided the fatal hit, ha!",
-    "Come on, I know you can take a hit!",
-    "Win or lose, there is no other way out!"
+    "Ha! Not bad fr. Not bad at all.",
+    "Yea, I guess \"if you can't beat them, draw them??\"",
+    "I will make you regret that 1 (or 100) you wasted from my score",
+    "Good way to avoid some defeats, but not for long!",
+    "The hero couldn't attack their enemy so they simply avoided the fatal hit, ha!",
+    "Come on, I know you can take a hit! It's just one more point for me... please?",
+    "Win or lose, there is no other way out! (Except the X button at top of this tab)"
   ],
   gameOver: [
-    "Get rekt! Play Again?",
-    "HAHAHA! You should have never installed me!",
-    "Undefeatable is my middle name",
-    "I love the smell of loser in tears",
-    "I feel humiliated for you to be honest",
-    "I am glad you're the tryhard type",
-    "Maybe you should join me in the dark side!",
+    "YAY! ❤ Thank you! Play Again?",
+    "HAHAHA! You should have never installed me! (Or opened this webpage...)",
+    "Undefeatable is my middle name (It's actually \"Neural\" but undefeated sounds better...)",
+    "It's okay! You can do this! (By this I mean tie endlessly with me until you get bored)",
+    "I am glad you're still playing ❤",
+    "Maybe you should join me in the dark side! We have cookies!",
     "Hey, do you need a tissue, your tears are making a lake in my house..."
   ],
   cheated: [

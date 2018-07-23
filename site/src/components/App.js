@@ -1,11 +1,23 @@
 import React, { Component } from 'react';
 
-import './App.css';
+import { css } from "emotion";
 
 import { networkPlay, isGameOver, reverseTurn, noMoreMovesLeft, startLoadingModel } from "../core/logic"
 
 import ScoreBoard from "./ScoreBoard";
 import Playground from "./Playground";
+import Brain from "./Brain";
+
+const styles = css({
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "space-between",
+  alignItems: "space-between",
+  backgroundColor: "#280F36",
+  width: "100%",
+  height: "100%",
+})
+
 
 class App extends Component {
   constructor(props) {
@@ -59,12 +71,25 @@ class App extends Component {
     }
   }
 
+  again = () => {
+    const { gameState } = this.state
+    if (gameState === "gameOver" || gameState === "draw" || gameState === "cheated") {
+      this.setState(() => ({
+        board: ["?", "?", "?", "?", "?", "?", "?", "?", "?"],
+        turn: "X",
+        me: reverseTurn(this.state.me),
+        gameState: "gameStart"
+      }))
+    }
+  }
+
 
   render() {
     return (
-      <div className="container">
+      <div className={styles}>
         <ScoreBoard loading={this.state.loading} scores={this.state.scores} />
         <Playground board={this.state.board} move={this.move} />
+        <Brain again={this.again} gameState={this.state.gameState} move={this.move} />
       </div>
     );
   }

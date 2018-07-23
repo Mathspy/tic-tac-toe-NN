@@ -1,16 +1,28 @@
 import React from "react"
 
 import { css } from "emotion"
+import mq from "../core/media"
 
 export default class Tile extends React.Component {
   constructor(props) {
     super(props)
 
+    this.state = {
+      animated: false
+    }
     // this.move = this.move.bind(this) //Because putting bind inside of render is a HORRIBLE idea! https://daveceddia.com/avoid-bind-when-passing-props/
 
     // this.cross1 = new Animated.Value(135.764);
     // this.cross2 = new Animated.Value(135.764);
     // this.nought = new Animated.Value(301.635);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (!this.state.animated && this.props.cell !== "?") {
+      this.setState(() => ({animated: true}))
+    } else if (this.props.cell === "?" && prevProps.cell !== "?") {
+      this.setState(() => ({animated: false}))
+    }
   }
 
   drawCross1() {
@@ -42,12 +54,12 @@ export default class Tile extends React.Component {
 
   renderIcon = () => { //Computed because, it is a computed property indeed!
     const { cell } = this.props
+    const { animated } = this.state
     if (cell === "X") {
-      this.drawCross1();
       return (
         <svg xmlns="http://www.w3.org/2000/svg" style={{ height: "100%",  width: "100%"}} viewBox="0 0 128 128">
-          <path d="M16,16L112,112" stroke={this.props.iconColor} strokeWidth="16" strokeDashoffset={this.cross1} strokeDasharray="135.764" />
-          <path d="M112,16L16,112" stroke={this.props.iconColor} strokeWidth="16" strokeDashoffset={this.cross2} strokeDasharray="135.764" />
+          <path d="M16,16L112,112" stroke={this.props.iconColor} strokeWidth="16" className={`${styles.cross1} ${animated ? styles.crossIn : ""}`} strokeDasharray="135.764" />
+          <path d="M112,16L16,112" stroke={this.props.iconColor} strokeWidth="16" className={`${styles.cross2} ${animated ? styles.crossIn : ""}`} strokeDasharray="135.764" />
         </svg>
       ) //#37154A
     } else if (cell === "O") {
@@ -80,10 +92,27 @@ export default class Tile extends React.Component {
 
 const styles = {
   square: css({
-    width: 150,
-    height: 150,
+    "@media (max-width: 576px)": {
+      width: 80,
+      height: 80,
+    },
+    [mq[0]]: {
+      width: 120,
+      height: 120,
+    },
     display: "inline-block"
   }),
+  cross1: css({
+    strokeDashoffset: 135.764,
+    transition: "500ms"
+  }),
+  cross2: css({
+    strokeDashoffset: 135.764,
+    transition: "500ms 500ms"
+  }),
+  crossIn: css({
+    strokeDashoffset: 0,
+  })
 };
 
 /*<Svg style={{ height: "100%",  width: "100%"}} viewBox="0 0 128 128">

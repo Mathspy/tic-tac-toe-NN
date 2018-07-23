@@ -1,6 +1,7 @@
 import React from "react"
 
 import { css, keyframes } from "emotion"
+import mq from "../core/media"
 
 export default class ScoreBoard extends React.Component {
   constructor(props) {
@@ -9,7 +10,6 @@ export default class ScoreBoard extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps.scores, this.props.scores)
     if (this.props.scores.player !== nextProps.scores.player) {
       this.startAnimation(600, 1)
     } else if (this.props.scores.network !== nextProps.scores.network) {
@@ -39,13 +39,13 @@ export default class ScoreBoard extends React.Component {
     return (
       <div className={styles.numerical}>
         <div className={`${styles.single} ${styles.first}`}>
-          <p className={`${styles.texty} ${this.state.network}`}>{this.props.scores.network}</p>
+          Me: <p className={`${styles.texty} ${this.state.network}`}>{this.props.scores.network}</p>
         </div>
         <div className={`${styles.single} ${styles.second}`}>
           {this.props.loading ? this.renderLoading() : null}
         </div>
         <div className={`${styles.single} ${styles.third}`}>
-          <p className={`${styles.texty} ${this.state.player}`}>{this.props.scores.player}</p>
+          You: {this.props.scores.network >= 10 ? "always " : ""}<p className={`${styles.texty} ${this.state.player}`}>{this.props.scores.player}</p>
         </div>
       </div>
     )
@@ -73,7 +73,14 @@ const styles = {
     flexDirection: "row",
     padding: 20,
     paddingTop: 10,
-    display: "inline-block"
+    display: "inline-block",
+    "@media (max-width: 600px)": {
+      fontSize: 35,
+    },
+    [mq[0]]: {
+      fontSize: 50,
+    },
+    color: "#FF9F70",
   }),
   first: css({
     justifyContent: "flex-start",
@@ -85,8 +92,8 @@ const styles = {
     justifyContent: "flex-end"
   }),
   texty: css({
-    fontSize: 50,
-    color: "#FF9F70",
+    margin: 0,
+    display: "inline-block"
   }),
   loading: css({
     animation: `${rotate} 2s infinite linear`

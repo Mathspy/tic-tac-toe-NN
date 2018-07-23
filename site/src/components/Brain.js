@@ -25,6 +25,7 @@ const styles = {
     height: 200,
     cursor: "pointer",
     transition: "0.3s",
+    userSelect: "none",
     ":hover": {
       backgroundColor: "#371448",
     }

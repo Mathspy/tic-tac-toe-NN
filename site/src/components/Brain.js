@@ -57,7 +57,7 @@ const insults = {
   gameProgress: [
   ],
   draw: [
-    "Ha! Not bad fr. Not bad at all.",
+    "Ha! Not bad friend. Not bad at all.",
     "Yea, I guess \"if you can't beat them, draw them??\"",
     "I will make you regret that 1 (or 100) you wasted from my score",
     "Good way to avoid some defeats, but not for long!",

@@ -48,9 +48,9 @@ class App extends Component {
   }
 
   move = (index, loadingOverride) => () => {
-    if ((!this.state.loading || loadingOverride)  && this.gameState !== "gameOver" && this.state.board[index] === "?") {
+    if ((!this.state.loading || loadingOverride) && this.state.gameState === "gameStart" && this.state.board[index] === "?") {
       const board = this.state.board.slice(0);
-      const { turn, gameState, me } = this.state;
+      const { turn, me } = this.state;
       board[index] = turn
       // console.log(board)
 

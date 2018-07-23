@@ -1,5 +1,7 @@
 import React from "react"
 
+//TO-DO: Rework animations using CSSTransitionGroup
+
 import { css, keyframes } from "emotion"
 import mq from "../core/media"
 
